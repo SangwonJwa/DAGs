@@ -44,7 +44,7 @@ def load(schema, table, records):
         cur.execute(f"DROP TABLE IF EXISTS {schema}.{table};")
         cur.execute(f"""
 CREATE TABLE {schema}.{table} (
-    country varchar(50),
+    country varchar(200),
     population bigint,
     area bigint
 );""")
