@@ -50,10 +50,11 @@ CREATE TABLE {schema}.{table} (
 );""")
         # DELETE FROM을 먼저 수행 -> FULL REFRESH을 하는 형태
         for r in records:
-            sql = f"INSERT INTO {schema}.{table} VALUES ('{r['country']}', {r['population']}, {r['area']});"
+            sql = f"INSERT INTO {schema}.{table} VALUES (%s, %s, %s);"
             print(sql)
-            cur.execute(sql)
-        cur.execute("COMMIT;")   # cur.execute("END;")
+            cur.execute(sql, (r['country'], r['population'], r['area']))
+        cur.execute("COMMIT;")   # cur.execute("END;")        
+        
     except Exception as error:
         print(error)
         cur.execute("ROLLBACK;")
